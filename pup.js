@@ -43,7 +43,7 @@ const [inputPath, outputPath] = program.processedArgs;
         }
 
         await page.goto(file);
-        
+
         await page.pdf({
             format: flags.pageSize,
             path: output,
