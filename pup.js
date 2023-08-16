@@ -58,8 +58,10 @@ const [inputPath, outputPath] = program.processedArgs;
             },
         });
 
-        await browser.close();
     } catch ( e ) {
         console.log(e);
+    } finally {
+        // ensure browser is closed even if an error is encountered
+        await browser.close();
     }
 })();
