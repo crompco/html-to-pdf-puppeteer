@@ -5,15 +5,15 @@
   "main": "pup.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "pkg -t node10-linux-x64 pup.js --compress Brotli"
+    "build": "pkg -t node16-linux-x64 pup.js --compress Brotli"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "commander": "^8.2.0",
-    "puppeteer-core": "^10.4.0"
+    "puppeteer-core": "^21.0.3"
   },
   "devDependencies": {
-    "pkg": "^5.8.0"
+    "pkg": "^5.8.1"
   }
 }

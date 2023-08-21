@@ -23,11 +23,12 @@ const flags = program.opts();
 const [inputPath, outputPath] = program.processedArgs;
 
 (async () => {
+    let browser;
     try {
         const input = inputPath;
         const output = outputPath;
 
-        const browser = await puppeteer.launch({
+        browser = await puppeteer.launch({
             defaultViewport: {
                 width: parseFloat(flags.width),
                 height: parseFloat(flags.height),
@@ -43,6 +44,7 @@ const [inputPath, outputPath] = program.processedArgs;
         }
 
         await page.goto(file);
+        await page.evaluateHandle('document.fonts.ready');
 
         await page.pdf({
             format: flags.pageSize,
@@ -57,9 +59,10 @@ const [inputPath, outputPath] = program.processedArgs;
                 bottom: flags.marginBottom || flags.margin,
             },
         });
-
-        await browser.close();
+        
     } catch ( e ) {
-        console.log(e);
+        console.error(e);
+    } finally {
+        await browser.close();
     }
 })();
