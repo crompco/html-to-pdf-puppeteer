@@ -11,7 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "commander": "^8.2.0",
-    "puppeteer-core": "^21.0.3"
+    "puppeteer-core": "^15.5.0"
   },
   "devDependencies": {
     "pkg": "^5.8.1"
