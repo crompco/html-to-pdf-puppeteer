@@ -15,6 +15,7 @@ program
     .option('--width  <type>', 'Width of browser window viewport', '768')
     .option('--print-background <type>', 'Whether the background should be in the pdf', true)
     .option('--emulate-type <type>', "The type of CSS media type of the page. 'screen', 'print', 'null'", false)
+    .option('--chrome-args <chromeArgs...>', 'Add additional arguments to chrome at launch', [])
     .allowUnknownOption()
 
 program.parse(process.argv);
@@ -27,6 +28,9 @@ const [inputPath, outputPath] = program.processedArgs;
     try {
         const input = inputPath;
         const output = outputPath;
+        const args = ['--no-sandbox'];
+
+        args.push(...flags.chromeArgs)
 
         browser = await puppeteer.launch({
             defaultViewport: {
@@ -34,7 +38,7 @@ const [inputPath, outputPath] = program.processedArgs;
                 height: parseFloat(flags.height),
             },
             executablePath: 'google-chrome-stable',
-            args: ['--no-sandbox']
+            args
         });
         const page = await browser.newPage();
         const file = `file://${input}`;
@@ -59,7 +63,7 @@ const [inputPath, outputPath] = program.processedArgs;
                 bottom: flags.marginBottom || flags.margin,
             },
         });
-        
+
     } catch ( e ) {
         console.error(e);
     } finally {
