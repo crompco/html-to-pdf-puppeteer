@@ -16,6 +16,7 @@ program
     .option('--print-background <type>', 'Whether the background should be in the pdf', true)
     .option('--emulate-type <type>', "The type of CSS media type of the page. 'screen', 'print', 'null'", false)
     .option('--chrome-args <chromeArgs...>', 'Add additional arguments to chrome at launch', [])
+    .option('--wait-for-selector <value>', 'Wait until a selector is present before generating the PDF', false)
     .allowUnknownOption()
 
 program.parse(process.argv);
@@ -49,6 +50,10 @@ const [inputPath, outputPath] = program.processedArgs;
 
         await page.goto(file);
         await page.evaluateHandle('document.fonts.ready');
+
+        if ( flags.waitForSelector !== false ) {
+            await page.waitForSelector(flags.waitForSelector);
+        }
 
         await page.pdf({
             format: flags.pageSize,
